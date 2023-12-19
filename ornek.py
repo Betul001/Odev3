@@ -1,12 +1,26 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 import pandas as pd
+import requests
 
 app = Flask(__name__)
 api = Api(app)
 
 class Users(Resource):
     def get(self):
+        reqUrl = "https://picsum.photos/200/300"
+
+        headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)" 
+        }
+
+        payload = ""
+
+        response = requests.request("GET", reqUrl, data=payload,  headers=headersList)
+
+        print(response.text)
+
         data = pd.read_csv('users.csv')
         data = data.to_dict('records')
         return {'data' : data}, 200
